@@ -1,3 +1,12 @@
+- name: Get keysize
+  ansible.builtin.stat:
+    path: /root/tpm2.key
+  register: tpm2_stat
+
+- name: Set keysize
+  ansible.builtin.set_fact:
+    keysize: "{{ tpm2_stat.size }}"
+
 - name: Clear TPM area
   ansible.builtin.command:
     cmd: tpm2_nvundefine 0x1500016 2>/dev/null
@@ -5,8 +14,8 @@
   failed_when: false
 
 - name: Define TPM area
-  ansible.builtin.shell:
-    cmd: tpm2_nvdefine -s $(cat /root/tpm2.key | wc -m) 0x1500016 > /dev/null
+  ansible.builtin.command:
+    cmd: tpm2_nvdefine -s {{ keysize }} 0x1500016 > /dev/null
     creates: /tmp/doesnotexist
 
 - name: Store key in TPM
