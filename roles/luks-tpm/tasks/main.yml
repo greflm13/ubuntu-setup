@@ -5,7 +5,7 @@
   failed_when: false
 
 - name: Define TPM area
-  ansible.builtin.command:
+  ansible.builtin.shell:
     cmd: tpm2_nvdefine -s $(cat /root/tpm2.key | wc -m) 0x1500016 > /dev/null
     creates: /tmp/doesnotexist
 
