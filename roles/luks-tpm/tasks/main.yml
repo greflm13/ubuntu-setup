@@ -9,7 +9,7 @@
 
 - name: Clear TPM area
   ansible.builtin.command:
-    cmd: tpm2_nvundefine 0x1500016 2>/dev/null
+    cmd: tpm2_nvundefine 0x1500016
     creates: /tmp/doesnotexist
   failed_when: false
 
@@ -17,6 +17,7 @@
   ansible.builtin.command:
     cmd: tpm2_nvdefine -s {{ keysize }} 0x1500016 > /dev/null
     creates: /tmp/doesnotexist
+  failed_when: false
 
 - name: Store key in TPM
   ansible.builtin.command:
