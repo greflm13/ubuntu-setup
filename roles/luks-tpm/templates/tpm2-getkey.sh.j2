@@ -13,7 +13,7 @@ then
 
    # No tmp, so it is the first time trying the script. Create a tmp file and try the TPM
    touch "${TMP_FILE}"
-   tpm2_nvread -s {{ keysize }} 0x1500016
+   tpm2_nvread -s {{ keysize }} {{ keyarea }}
 else
-   tpm2_nvread -s {{ keysize }} 0x1500016
+   tpm2_nvread -s {{ keysize }} {{ keyarea }}
 fi
