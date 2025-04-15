@@ -5,7 +5,7 @@
 
 - name: Set keysize
   ansible.builtin.set_fact:
-    keysize: "{{ tpm2_stat.size }}"
+    keysize: "{{ tpm2_stat.stat.size }}"
 
 - name: Clear TPM area
   ansible.builtin.command:
