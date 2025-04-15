@@ -1,0 +1,7 @@
+{
+    "yaml.schemas": {
+        "file:///home/fgreistorfer/git/github.com/greflm13/ubuntu-setup/autoinstall.schema.json": "file:///home/fgreistorfer/git/github.com/greflm13/ubuntu-setup/autoinstall.yaml",
+        "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": "file:///home/fgreistorfer/git/github.com/greflm13/ubuntu-setup/ansible-setup.yml"
+    },
+    "ansible.python.interpreterPath": "/home/fgreistorfer/.pyenv/versions/3.12.9/bin/python"
+}

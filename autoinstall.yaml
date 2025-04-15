@@ -1,0 +1,234 @@
+#cloud-config
+# See the autoinstall documentation at:
+# https://canonical-subiquity.readthedocs-hosted.com/en/latest/reference/autoinstall-reference.html
+autoinstall:
+  lukskey: &lukskey O5LiweQZMCxEyJSItJTLSi4GzinGlIx4XH19QcXIAFsLgw5pCScRdZWgiGacig9C
+  version: 1
+  interactive-sections:
+    - identity
+  active-directory:
+    admin-name: ""
+    domain-name: anx.local
+  apt:
+    disable_components: []
+    fallback: offline-install
+    geoip: true
+    mirror-selection:
+      primary:
+        - country-mirror
+        - arches: &id001
+            - amd64
+            - i386
+          uri: http://archive.ubuntu.com/ubuntu/
+        - arches: &id002
+            - s390x
+            - arm64
+            - armhf
+            - powerpc
+            - ppc64el
+            - riscv64
+          uri: http://ports.ubuntu.com/ubuntu-ports
+    preserve_sources_list: false
+    security:
+      - arches: *id001
+        uri: http://security.ubuntu.com/ubuntu/
+      - arches: *id002
+        uri: http://ports.ubuntu.com/ubuntu-ports
+  codecs:
+    install: true
+  drivers:
+    install: true
+  identity:
+    hostname: CHANGEME
+    password: $y$j9T$pV3LjPDUvbBhu7JW2xMBI0$ik/pcSSfpQDTERptcbV1pqWUUzoBh7Ucb6BJzOXXAu/
+    realname: CHANGE ME
+    username: changeme
+  keyboard:
+    layout: at
+    toggle: null
+    variant: nodeadkeys
+  locale: de_AT.UTF-8
+  oem:
+    install: true
+  shutdown: reboot
+  source:
+    id: ubuntu-desktop
+    search_drivers: true
+  ssh:
+    allow-pw: false
+    authorized-keys: []
+    install-server: false
+  storage:
+    config:
+      - id: nvme-controller-nvme0
+        type: nvme_controller
+        transport: pcie
+        preserve: true
+      - id: disk-nvme0n1
+        type: disk
+        path: /dev/nvme0n1
+        nvme_controller: nvme-controller-nvme0
+        ptable: gpt
+        wipe: superblock-recursive
+        preserve: false
+        grub_device: false
+      - id: efipart
+        type: partition
+        device: disk-nvme0n1
+        offset: 1048576
+        size: 1127219200
+        flag: boot
+        grub_device: true
+      - id: bootpart
+        type: partition
+        device: disk-nvme0n1
+        size: 2147483648
+      - id: pvpart
+        type: partition
+        device: disk-nvme0n1
+        size: -1
+      - id: dm_crypt-0
+        type: dm_crypt
+        volume: pvpart
+        key: *lukskey
+      - id: vg0
+        type: lvm_volgroup
+        name: vg0
+        devices:
+          - dm_crypt-0
+      - id: root_lv
+        type: lvm_partition
+        name: root_lv
+        volgroup: vg0
+        size: 45G
+      - id: home_lv
+        type: lvm_partition
+        name: home_lv
+        volgroup: vg0
+        size: -1
+      - id: efipart_fs
+        type: format
+        volume: efipart
+        fstype: fat32
+      - id: bootpart_fs
+        type: format
+        volume: bootpart
+        fstype: ext4
+      - id: root_lv_fs
+        type: format
+        volume: root_lv
+        fstype: ext4
+      - id: home_lv_fs
+        type: format
+        volume: home_lv
+        fstype: ext4
+      - id: efipart_mount
+        type: mount
+        device: efipart_fs
+        path: /boot/efi
+      - id: bootpart_mount
+        type: mount
+        device: bootpart_fs
+        path: /boot
+      - id: root_lv_mount
+        type: mount
+        device: root_lv_fs
+        path: /
+      - id: home_lv_mount
+        type: mount
+        device: home_lv_fs
+        path: /home
+  timezone: Europe/Vienna
+  updates: all
+  user-data:
+    apt:
+      sources:
+        mattermost_stable.list:
+          source: "deb https://deb.packages.mattermost.com stable main"
+          key: |
+            -----BEGIN PGP PUBLIC KEY BLOCK-----
+
+            mQENBFjZQxwBCAC6kNn3zDlq/aY83M9V7MHVPoK2jnZ3BfH7sA+ibQXsijCkPSR4
+            5bCUJ9qVA4XKGK+cpO9vkolSNs10igCaaemaUZNB6ksu3gT737/SZcCAfRO+cLX7
+            Q2la+jwTvu1YeT/M5xDZ1KHTFxsGskeIenz2rZHeuZwBl9qep34QszWtRX40eRts
+            fl6WltLrepiExTp6NMZ50k+Em4JGM6CWBMo22ucy0jYjZXO5hEGb3o6NGiG+Dx2z
+            b2J78LksCKGsSrn0F1rLJeA933bFL4g9ozv9asBlzmpgG77ESg6YE1N/Rh7WDzVA
+            prIR0MuB5JjElASw5LDVxDV6RZsxEVQr7ETLABEBAAG0KU1hdHRlcm1vc3QgQnVp
+            bGQgPGRldi1vcHNAbWF0dGVybW9zdC5jb20+iQFUBBMBCAA+AhsDBQsJCAcCBhUI
+            CQoLAgQWAgMBAh4BAheAFiEEobMdRvDzoQsCzy1E+PLDF0R3SygFAmYTl7kFCRS/
+            Ip0ACgkQ+PLDF0R3SyjrHwf7Byo5TU5mRv8vKP76jE8QJJDjmIM4+jT16ywIiEmu
+            ZvBQC5GAliLrXqfQCOvCddwRoq4AqGIGs1yZRpHjcrxNkRVIn4G3w3li+8MYsG3U
+            4Iz2tjdMwXrinhFCDUEG7LP8riGREC482PUBwBY9Q9b2TSTs9hn+CURBN+c4xVM6
+            Nxx0r/Z9JBrCIOQYxBAj0GFeFO49EowbcbIGkHIBTR9BFBzaTZtqgDb4Vgmgovec
+            /ZimCgN7TPE/3Jt5NfSCslnniRGZdxQt/CeabzpqBzsQKUQfL0Om5c/f/eaxlFPR
+            /Vx0r829es4uJ7F1RwcBGM+VnWvfJMe+JIDmxO+3JSUD8w==
+            =Z70o
+            -----END PGP PUBLIC KEY BLOCK-----
+        vscode.list:
+          source: "deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/repos/code stable main"
+          key: |
+            -----BEGIN PGP PUBLIC KEY BLOCK-----
+            Version: GnuPG v1.4.7 (GNU/Linux)
+
+            mQENBFYxWIwBCADAKoZhZlJxGNGWzqV+1OG1xiQeoowKhssGAKvd+buXCGISZJwT
+            LXZqIcIiLP7pqdcZWtE9bSc7yBY2MalDp9Liu0KekywQ6VVX1T72NPf5Ev6x6DLV
+            7aVWsCzUAF+eb7DC9fPuFLEdxmOEYoPjzrQ7cCnSV4JQxAqhU4T6OjbvRazGl3ag
+            OeizPXmRljMtUUttHQZnRhtlzkmwIrUivbfFPD+fEoHJ1+uIdfOzZX8/oKHKLe2j
+            H632kvsNzJFlROVvGLYAk2WRcLu+RjjggixhwiB+Mu/A8Tf4V6b+YppS44q8EvVr
+            M+QvY7LNSOffSO6Slsy9oisGTdfE39nC7pVRABEBAAG0N01pY3Jvc29mdCAoUmVs
+            ZWFzZSBzaWduaW5nKSA8Z3Bnc2VjdXJpdHlAbWljcm9zb2Z0LmNvbT6JATUEEwEC
+            AB8FAlYxWIwCGwMGCwkIBwMCBBUCCAMDFgIBAh4BAheAAAoJEOs+lK2+EinPGpsH
+            /32vKy29Hg51H9dfFJMx0/a/F+5vKeCeVqimvyTM04C+XENNuSbYZ3eRPHGHFLqe
+            MNGxsfb7C7ZxEeW7J/vSzRgHxm7ZvESisUYRFq2sgkJ+HFERNrqfci45bdhmrUsy
+            7SWw9ybxdFOkuQoyKD3tBmiGfONQMlBaOMWdAsic965rvJsd5zYaZZFI1UwTkFXV
+            KJt3bp3Ngn1vEYXwijGTa+FXz6GLHueJwF0I7ug34DgUkAFvAs8Hacr2DRYxL5RJ
+            XdNgj4Jd2/g6T9InmWT0hASljur+dJnzNiNCkbn9KbX7J/qK1IbR8y560yRmFsU+
+            NdCFTW7wY0Fb1fWJ+/KTsC4=
+            =J6gs
+            -----END PGP PUBLIC KEY BLOCK-----
+        fortimirror.anexia.list:
+          source: "deb [arch=amd64] https://fortimirror.anexia.com/stable stable non-free"
+          key: |
+            -----BEGIN PGP PUBLIC KEY BLOCK-----
+            Version: GnuPG v1
+
+            mQENBFst9sYBCADK9Wl8PCqSeKq75o4j7y65J8uEfvctyANV2YHqcqIC6DITnPpE
+            hAy0AybhVGnWLXuApsCgSFvFW81lE/AWBVaZzbtTMoM8PeVTEsts13bp/Ww1VFzY
+            Zp6z7Pz9KVd4rhauHsDx9QZ+7/BNRe5YlcLfWsF56jOgxIKax5tVudC6OelAf8mL
+            tIGGlZYDHzJD55SaRjRTgZSrK/KcLxnmYbIGrkNaCN7bW26jFbkBfM2aesu8/zgw
+            HSTHqlJuvaup+8jiavCwIzh0kOuUO3ZLrH0f9vOu17KuEJl+9eAsGo73TI496wx1
+            JWr9yTw/61HzJu6+MjadtBgh/sjJXggJLOBBABEBAAG0VkZvcnRpbmV0XEZvcnRp
+            Q2xpZW50IChGb3J0aW5ldCBGb3J0aUNsaWVudCBERUIgUGFja2FnZSBTaWduaW5n
+            KSA8c3VwcG9ydEBmb3J0aW5ldC5jb20+iQFVBBMBCgA/AhsDBgsJCAcDAgYVCAIJ
+            CgsEFgIDAQIeAQIXgBYhBCZOEUxpEdCNO6bObBisJjleVHFtBQJklNqtBQku/unn
+            AAoJEBisJjleVHFtH4gIAICq2xTZJCxCyflDCempfKcoxP3vsNFwnFovJbUo5Cdk
+            F5FjtidX/rNqrxhd/xcxKyzuAs60fR99b+Lk3r/dp7N8ZSvsA3DJMOn3w6ZQX8QF
+            Ku2aGGvWM2I+SxnrL/wuSfEGn78EE9sKSGCTiVczm/5sHQ559vS/6CXGA4CWFkaE
+            8vlMZga/K/vYCPYAbycdynSDTWlKY/GTBf7gANTWj2aM50vqhZWL4T11WeFXFG2u
+            afFwEuJYUn398x0XkIPGc9SLwS5FW6nIWBVvVvPO1T5Y2PA6EXT2sST0ibSx9rG3
+            t9qz+nff0F9Ob4kMZfrJWSE58GilXt47U86gh1lOhE0=
+            =nDwo
+            -----END PGP PUBLIC KEY BLOCK-----
+    packages:
+      - evolution
+      - evolution-ews
+      - mattermost-desktop
+      - forticlient
+      - linuxsecurity-installer
+      - code
+      - tpm2-tools
+      - git
+    package_update: true
+    package_upgrade: true
+    write_files:
+      - content: *lukskey
+        owner: root:root
+        path: /root/tpm2.key
+        permissions: "0600"
+    runcmd:
+      - passwd --expire "$(id -nu 1000)"
+    ansible:
+      install_method: pip
+      pull:
+        url: "https://github.com/greflm13/ubuntu-setup.git"
+        playbook_name: ansible-setup.yml

@@ -1,0 +1,7 @@
+---
+- name: Ansible-Pull setup new Ubuntu Client
+  hosts: 127.0.0.1
+  connection: local
+  become: true
+  roles:
+    - luks-tpm

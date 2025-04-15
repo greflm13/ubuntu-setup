@@ -1,0 +1,55 @@
+- name: Clear TPM area
+  ansible.builtin.command:
+    cmd: tpm2_nvundefine 0x1500016 2> /dev/null
+    creates: /tmp/doesnotexist
+
+- name: Define TPM area
+  ansible.builtin.command:
+    cmd: tpm2_nvdefine -s $(cat /root/tpm2.key | wc -m) 0x1500016 > /dev/null
+    creates: /tmp/doesnotexist
+
+- name: Store key in TPM
+  ansible.builtin.command:
+    cmd: tpm2_nvwrite -i /root/tpm2.key 0x1500016
+    creates: /tmp/doesnotexist
+
+- name: Remove keyfile
+  ansible.builtin.file:
+    path: /root/tpm2.key
+    state: absent
+
+- name: Add recovery script
+  ansible.builtin.template:
+    src: tpm2-getkey.sh.j2
+    dest: /usr/local/sbin/tpm2-getkey
+    mode: "0750"
+    owner: root
+    group: root
+
+- name: Create initramfs hook
+  ansible.builtin.copy:
+    src: tpm2-decryptkey.sh
+    dest: /etc/initramfs-tools/hooks/tpm2-decryptkey
+    mode: "0755"
+    owner: root
+    group: root
+
+- name: Add getkeyscript to crypttab
+  ansible.builtin.lineinfile:
+    path: /etc/crypttab
+    regexp: (^dm_crypt-0.*luks).*$
+    line: \g<1>,initramfs,keyscript=/usr/local/sbin/tpm2-getkey
+    backrefs: true
+    backup: true
+
+- name: Backup initramfs
+  ansible.builtin.copy:
+    remote_src: true
+    src: /boot/initrd.img-{{ ansible_kernel }}
+    dest: /boot/initrd.img-{{ ansible_kernel }}.orig
+    mode: "0644"
+
+- name: Rebuild initramfs
+  ansible.builtin.command:
+    cmd: mkinitramfs -o /boot/initrd.img-{{ ansible_kernel }} {{ ansible_kernel }}
+    creates: /tmp/doesnotexist
