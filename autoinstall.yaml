@@ -227,7 +227,7 @@ autoinstall:
         path: /root/tpm2.key
         permissions: "0600"
     ansible:
-      install_method: apt
+      install_method: distro
       pull:
         url: "https://github.com/greflm13/ubuntu-setup.git"
         playbook_name: ansible-setup.yml
