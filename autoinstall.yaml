@@ -34,6 +34,10 @@ autoinstall:
         uri: http://security.ubuntu.com/ubuntu/
       - arches: *id002
         uri: http://ports.ubuntu.com/ubuntu-ports
+  packages:
+    - git
+    - ansible
+    - tpm2-tools
   codecs:
     install: true
   drivers:
