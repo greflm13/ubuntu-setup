@@ -2,7 +2,6 @@
 # See the autoinstall documentation at:
 # https://canonical-subiquity.readthedocs-hosted.com/en/latest/reference/autoinstall-reference.html
 autoinstall:
-  lukskey: &lukskey tempkey
   version: 1
   interactive-sections:
     - identity
@@ -93,7 +92,7 @@ autoinstall:
       - id: dm_crypt-0
         type: dm_crypt
         volume: pvpart
-        key: *lukskey
+        key: tempkey
       - id: vg0
         type: lvm_volgroup
         name: vg0
