@@ -2,7 +2,7 @@
 # See the autoinstall documentation at:
 # https://canonical-subiquity.readthedocs-hosted.com/en/latest/reference/autoinstall-reference.html
 autoinstall:
-  lukskey: &lukskey O5LiweQZMCxEyJSItJTLSi4GzinGlIx4XH19QcXIAFsLgw5pCScRdZWgiGacig9C
+  lukskey: &lukskey tempkey
   version: 1
   interactive-sections:
     - identity
@@ -37,7 +37,6 @@ autoinstall:
   packages:
     - git
     - ansible
-    - tpm2-tools
   codecs:
     install: true
   drivers:
@@ -144,6 +143,11 @@ autoinstall:
         path: /home
   timezone: Europe/Vienna
   updates: all
+  late-commands:
+    - curtin in-target -- apt-get update
+    - curtin in-target -- apt-get install -y curl vim tpm2-tools
+    - curtin in-target -- curl -o /tmp/tpm2-keysetup.sh https://raw.githubusercontent.com/greflm13/ubuntu-setup/refs/heads/main/tpm2-keysetup.sh
+    - curtin in-target -- /bin/bash /tmp/tpm2-keysetup.sh
   user-data:
     apt:
       sources:
@@ -220,20 +224,17 @@ autoinstall:
       - forticlient
       - linuxsecurity-installer
       - code
-      - tpm2-tools
-      - git
-      - ansible
     package_update: true
     package_upgrade: true
-    write_files:
-      - content: *lukskey
-        owner: root:root
-        path: /root/tpm2.key
-        permissions: "0600"
-    ansible:
-      install_method: distro
-      pull:
-        url: "https://github.com/greflm13/ubuntu-setup.git"
-        playbook_name: ansible-setup.yml
+    # write_files:
+    #   - content: *lukskey
+    #     owner: root:root
+    #     path: /root/tpm2.key
+    #     permissions: "0600"
+    # ansible:
+    #   install_method: distro
+    #   pull:
+    #     url: "https://github.com/greflm13/ubuntu-setup.git"
+    #     playbook_name: ansible-setup.yml
     runcmd:
       - passwd --expire "$(id -nu 1000)"

@@ -1,3 +1,4 @@
+---
 - name: Get keysize
   ansible.builtin.stat:
     path: /root/tpm2.key

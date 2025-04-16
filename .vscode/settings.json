@@ -1,7 +1,9 @@
 {
     "yaml.schemas": {
-        "file:///home/fgreistorfer/git/github.com/greflm13/ubuntu-setup/autoinstall.schema.json": "file:///home/fgreistorfer/git/github.com/greflm13/ubuntu-setup/autoinstall.yaml",
-        "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": "file:///home/fgreistorfer/git/github.com/greflm13/ubuntu-setup/ansible-setup.yml"
+        "autoinstall.schema.json": "autoinstall.yaml",
+        "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json#/$defs/playbook": "ansible-setup.yml",
+        "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible-lint-config.json": ".ansible-lint.yml"
     },
-    "ansible.python.interpreterPath": "/home/fgreistorfer/.pyenv/versions/3.12.9/bin/python"
+    "ansible.python.interpreterPath": "~/.pyenv/versions/3.12.9/bin/python",
+    "ansible.validation.lint.arguments": "-c .ansible-lint.yml"
 }

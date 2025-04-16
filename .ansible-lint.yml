@@ -1,0 +1,12 @@
+---
+# .ansible-lint
+
+profile: production
+skip_list:
+  - command-instead-of-shell
+write_list:
+  - fqcn
+  - jinja
+  - key-order
+  - name
+  - yaml
