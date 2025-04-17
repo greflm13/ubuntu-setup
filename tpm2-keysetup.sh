@@ -115,7 +115,7 @@ echo "${TEMPKEY}" | sudo cryptsetup luksRemoveKey "${CRYPTDEVPATH}"
 echo "New Key is: ${KEY}"
 
 # Removing /root/tpm2.key file for extra security
-rm /root/tpm2.key
+# rm /root/tpm2.key
 
 # Export LUKS header for backup
 cryptsetup luksHeaderBackup "${CRYPTDEVPATH}" --header-backup-file "/root/$(hostname)_luks.header.bin"
