@@ -152,8 +152,6 @@ autoinstall:
   user-data:
     package_update: true
     package_upgrade: true
-    runcmd:
-      - passwd --expire "$(id -nu 1000)"
     ansible:
       install_method: distro
       pull:
