@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
 # Create keyrings folder if it does not exist
-mkdir -p /usr/share/keyrings
+mkdir -p /etc/apt/keyrings
 
 # Mattermost public key
-curl https://deb.packages.mattermost.com/pubkey.gpg | gpg --dearmor > /usr/share/keyrings/mattermost.gpg
+curl https://deb.packages.mattermost.com/pubkey.gpg -o /etc/apt/keyrings/packages.mattermost.com.asc
 
 # Mattermost repo
-echo "deb [signed-by=/usr/share/keyrings/mattermost.gpg] https://deb.packages.mattermost.com stable main" > /etc/apt/sources.list.d/mattermost_stable.list
+echo "deb [signed-by=/etc/apt/keyrings/packages.mattermost.com.asc] https://deb.packages.mattermost.com stable main" > /etc/apt/sources.list.d/mattermost_stable.list
 
 # Anexia Fortimirror public key
-curl https://fortimirror.anexia.com/stable/DEB-GPG-KEY | gpg --dearmor > /usr/share/keyrings/fortimirror.anexia.gpg
+curl https://fortimirror.anexia.com/stable/DEB-GPG-KEY -o /etc/apt/keyrings/fortimirror.anexia.com.asc
 
 # Anexia Fortimirror repo
-echo "deb [signed-by=/usr/share/keyrings/fortimirror.anexia.gpg,arch=amd64] https://fortimirror.anexia.com/stable stable non-free" > /etc/apt/sources.list.d/fortimirror.anexia.list
+echo "deb [signed-by=/etc/apt/keyrings/fortimirror.anexia.com.asc arch=amd64] https://fortimirror.anexia.com/stable stable non-free" > /etc/apt/sources.list.d/fortimirror.anexia.list
 
 apt-get update
 
