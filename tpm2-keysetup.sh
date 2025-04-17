@@ -3,7 +3,7 @@
 KEYSIZE=64
 TEMPKEY="tempkey"
 KEYAREA="0x1500016"
-KERNEL=$(uname -r)
+KERNEL=$(readlink /boot/initrd.img | sed 's/initrd.img-//')
 CRYPTDEVNAME=$(grep -o '^\s*[^#[:space:]]\S*' /etc/crypttab)
 CRYPTDEVPATH=$(cryptsetup status "${CRYPTDEVNAME}" | sed -n -E 's/\s+device:\s+(.*)/\1/p')
 
