@@ -80,11 +80,6 @@ EOF
 chown root: /etc/initramfs-tools/hooks/tpm2-decryptkey
 chmod 755 /etc/initramfs-tools/hooks/tpm2-decryptkey
 
-echo
-echo
-echo
-echo "Backing up /etc/crypttab to /etc/crypttab.bak then updating"
-echo "selected devices to unlock automatically..."
 cp /etc/crypttab /etc/crypttab.bak
 
 # Check to see if tpm2-getkey has already been added to the device manually or by a previous version
