@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 KEYSIZE=64
 TEMPKEY="tempkey"

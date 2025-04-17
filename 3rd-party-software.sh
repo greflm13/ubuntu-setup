@@ -7,13 +7,13 @@ mkdir -p /usr/share/keyrings
 curl https://deb.packages.mattermost.com/pubkey.gpg | gpg --dearmor > /usr/share/keyrings/mattermost.gpg
 
 # Mattermost repo
-echo "deb https://deb.packages.mattermost.com stable main" > /etc/apt/sources.list.d/mattermost_stable.list
+echo "deb [signed-by=/usr/share/keyrings/mattermost.gpg] https://deb.packages.mattermost.com stable main" > /etc/apt/sources.list.d/mattermost_stable.list
 
 # Anexia Fortimirror public key
 curl https://fortimirror.anexia.com/stable/DEB-GPG-KEY | gpg --dearmor > /usr/share/keyrings/fortimirror.anexia.gpg
 
 # Anexia Fortimirror repo
-echo "deb [arch=amd64] https://fortimirror.anexia.com/stable stable non-free" > /etc/apt/sources.list.d/fortimirror.anexia.list
+echo "deb [signed-by=/usr/share/keyrings/fortimirror.anexia.gpg,arch=amd64] https://fortimirror.anexia.com/stable stable non-free" > /etc/apt/sources.list.d/fortimirror.anexia.list
 
 apt-get update
 
