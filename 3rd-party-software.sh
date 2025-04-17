@@ -31,5 +31,14 @@ debconf-set-selections <<< "icaclient app_protection/install_app_protection sele
 apt-get install -f /tmp/icaclient_amd64.deb -y
 apt-get install -f /tmp/ctxusb_amd64.deb -y
 
-apt-get install -y evolution-ews mattermost-desktop forticlient linuxsecurity-installer
+# WithSecure Elements
+curl -sSL -o /tmp/f-secure.deb "https://download.withsecure.com/PSB/latest/f-secure-linuxsecurity.deb"
+
+apt-get install -f /tmp/f-secure.deb
+
+# @TODO
+# move to first boot
+# /opt/f-secure/linuxsecurity/bin/activate --psb --subscription-key CJ2U-AGF6-AAKZ-PLLR-JAEL
+
+apt-get install -y evolution-ews mattermost-desktop forticlient
 
