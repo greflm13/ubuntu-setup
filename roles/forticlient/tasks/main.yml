@@ -1,0 +1,15 @@
+---
+- name: Register ems
+  ansible.builtin.command:
+    cmd: forticlient epctrl register anx-i-ems0401.anexia.work
+    creates: /tmp/fakefile
+
+- name: WhoAmI?
+  ansible.builtin.command:
+    cmd: whoami
+    creates: /tmp/fakefile
+  register: whoami
+
+- name: Debug
+  ansible.builtin.debug:
+    var: whoami
