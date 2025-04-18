@@ -40,5 +40,7 @@ apt-get install -f /tmp/f-secure.deb
 # move to first boot
 # /opt/f-secure/linuxsecurity/bin/activate --psb --subscription-key CJ2U-AGF6-AAKZ-PLLR-JAEL
 
+yes | forticlient epctrl register anx-i-ems0401.anexia.work
+
 apt-get install -y evolution-ews mattermost-desktop forticlient
 

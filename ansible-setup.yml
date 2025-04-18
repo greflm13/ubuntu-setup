@@ -2,6 +2,6 @@
 - name: Ansible-Pull setup new Ubuntu Client
   hosts: localhost
   connection: local
-  become: false
+  become: true
   roles:
     - forticlient
