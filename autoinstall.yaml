@@ -150,7 +150,8 @@ autoinstall:
     package_update: true
     package_upgrade: true
     ansible:
-      install_method: pip
+      package_name: ansible-core
+      install_method: distro
       pull:
         url: "https://github.com/greflm13/ubuntu-setup.git"
         playbook_name: ansible-setup.yml
