@@ -55,8 +55,9 @@ autoinstall:
     search_drivers: true
   ssh:
     allow-pw: false
-    authorized-keys: []
-    install-server: false
+    authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ+3VfoOlkHCH9P7fPNhiDqUPC0ZVsBbjnj4orayM8+a
+    install-server: true
   storage:
     config:
       - id: nvme-controller-nvme0

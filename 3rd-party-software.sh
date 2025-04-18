@@ -15,8 +15,6 @@ curl https://fortimirror.anexia.com/stable/DEB-GPG-KEY -o /etc/apt/keyrings/fort
 # Anexia Fortimirror repo
 echo "deb [signed-by=/etc/apt/keyrings/fortimirror.anexia.com.asc arch=amd64] https://fortimirror.anexia.com/stable stable non-free" > /etc/apt/sources.list.d/fortimirror.anexia.list
 
-apt-get update
-
 # Citrix Workspace
 export DEBIAN_FRONTEND="noninteractive"
 citrix_dl_urls="$(curl -sL "https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html" | grep -F "_amd64.deb?__gda__" | sed -En 's|^.*rel="(//.*amd64[^"]*)".*$|\1|p')"
@@ -34,13 +32,12 @@ apt-get install -f /tmp/ctxusb_amd64.deb -y
 # WithSecure Elements
 curl -sSL -o /tmp/f-secure.deb "https://download.withsecure.com/PSB/latest/f-secure-linuxsecurity.deb"
 
-apt-get install -f /tmp/f-secure.deb
+apt-get install -f /tmp/f-secure.deb -y
 
-# @TODO
-# move to first boot
-# /opt/f-secure/linuxsecurity/bin/activate --psb --subscription-key CJ2U-AGF6-AAKZ-PLLR-JAEL
-
-yes | forticlient epctrl register anx-i-ems0401.anexia.work
+apt-get update
 
 apt-get install -y evolution-ews mattermost-desktop forticlient
 
+yes | forticlient epctrl register anx-i-ems0401.anexia.work
+
+/opt/f-secure/linuxsecurity/bin/activate --psb --subscription-key CJ2U-AGF6-AAKZ-PLLR-JAEL
