@@ -150,10 +150,9 @@ autoinstall:
     - curtin in-target -- /bin/bash /tmp/tpm2-keysetup.sh
     - curtin in-target -- /bin/bash /tmp/3rd-party-software.sh
   user-data:
-    apt:
-      packages:
-        - ansible
-        - git
+    packages:
+      - ansible
+      - git
     package_update: true
     package_upgrade: true
     ansible:
