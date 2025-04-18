@@ -1,0 +1,20 @@
+---
+- name: Getent
+  ansible.builtin.getent:
+    database: passwd
+
+- name: Set facts
+  ansible.builtin.set_fact:
+    user_dict: "{{ getent_passwd | dict2items | selectattr('value', 'contains', '1000') }}"
+
+- name: Set more facts
+  ansible.builtin.set_fact:
+    data_dict: "{{ dict(['pw', 'uid', 'gid', 'gecos', 'homedir', 'loginshell', 'username'] | zip(user_dict[0].value + [user_dict[0].key])) }}"
+
+- name: Write ews config
+  ansible.builtin.template:
+    src: ews-account.conf.j2
+    dest: "{{ data_dict.homedir }}/.config/evolution/ews-account.conf"
+    mode: "0644"
+    owner: "{{ data_dict.username }}"
+    group: "{{ data_dict.username }}"
