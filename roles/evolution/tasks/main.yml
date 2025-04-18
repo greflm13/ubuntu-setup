@@ -13,8 +13,8 @@
 
 - name: Write ews config
   ansible.builtin.template:
-    src: ews-account.conf.j2
-    dest: "{{ data_dict.homedir }}/.config/evolution/ews-account.conf"
+    src: ews.source.j2
+    dest: "{{ data_dict.homedir }}/.config/evolution/sources/ews.source"
     mode: "0644"
     owner: "{{ data_dict.username }}"
     group: "{{ data_dict.username }}"
