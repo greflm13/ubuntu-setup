@@ -1,0 +1,5 @@
+---
+- name: Activate WithSecure Elements
+  ansible.builtin.command:
+    cmd: /opt/f-secure/linuxsecurity/bin/activate --psb --subscription-key CJ2U-AGF6-AAKZ-PLLR-JAEL
+    creates: /tmp/doesnotexist

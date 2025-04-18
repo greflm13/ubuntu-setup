@@ -39,5 +39,3 @@ apt-get update
 apt-get install -y evolution-ews mattermost-desktop forticlient
 
 yes | forticlient epctrl register anx-i-ems0401.anexia.work
-
-/opt/f-secure/linuxsecurity/bin/activate --psb --subscription-key CJ2U-AGF6-AAKZ-PLLR-JAEL
