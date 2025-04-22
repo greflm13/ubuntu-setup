@@ -37,5 +37,3 @@ apt-get install -f /tmp/f-secure.deb -y
 apt-get update
 
 apt-get install -y evolution-ews mattermost-desktop forticlient
-
-yes | forticlient epctrl register anx-i-ems0401.anexia.work

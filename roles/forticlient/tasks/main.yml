@@ -1,0 +1,5 @@
+---
+- name: Activate FortiClient EMS
+  ansible.builtin.shell:
+    cmd: yes | forticlient epctrl register anx-i-ems0401.anexia.work
+    creates: /tmp/doesnotexist
