@@ -1,6 +1,7 @@
 #cloud-config
 # See the autoinstall documentation at:
 # https://canonical-subiquity.readthedocs-hosted.com/en/latest/reference/autoinstall-reference.html
+# https://anx.io/2S5xe
 autoinstall:
   version: 1
   interactive-sections:

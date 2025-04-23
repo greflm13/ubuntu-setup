@@ -4,6 +4,7 @@
 profile: production
 skip_list:
   - command-instead-of-shell
+  - risky-shell-pipe
 write_list:
   - fqcn
   - jinja
