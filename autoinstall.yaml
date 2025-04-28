@@ -143,7 +143,7 @@ autoinstall:
   updates: all
   late-commands:
     - curtin in-target -- apt-get update
-    - curtin in-target -- apt-get install -y curl vim tpm2-tools ansible git
+    - curtin in-target -- apt-get install -y curl vim tpm2-tools ansible git python3-psutil
     - curtin in-target -- curl -o /tmp/tpm2-keysetup.sh https://raw.githubusercontent.com/greflm13/ubuntu-setup/refs/heads/main/tpm2-keysetup.sh
     - curtin in-target -- curl -o /tmp/3rd-party-software.sh https://raw.githubusercontent.com/greflm13/ubuntu-setup/refs/heads/main/3rd-party-software.sh
     - curtin in-target -- /bin/bash /tmp/tpm2-keysetup.sh

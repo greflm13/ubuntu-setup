@@ -11,13 +11,18 @@
   ansible.builtin.set_fact:
     data_dict: "{{ dict(['pw', 'uid', 'gid', 'gecos', 'homedir', 'loginshell', 'username'] | zip(user_dict[0].value + [user_dict[0].key])) }}"
 
-- name: Write ews config
+- name: Write ews config(s)
   ansible.builtin.template:
-    src: ews.source.j2
-    dest: "{{ data_dict.homedir }}/.config/evolution/sources/ews.source"
+    src: "{{ item }}.j2"
+    dest: "{{ data_dict.homedir }}/.config/evolution/sources/{{ item }}"
     mode: "0644"
     owner: "{{ data_dict.username }}"
     group: "{{ data_dict.username }}"
+  with_items:
+    - 591bae34b085e48b766838820668d737168f4a04.source
+    - 3135d96bc542373cdadb0c25a8d3dbe942ccde60.source
+    - ac1ba36696307e7641c49b8bedf84b961343bf6c.source
+    - f0a7e7f5a00db376e2a50d770ba037253b3d3c36.source
 
 - name: Disable startup Wizard
   community.general.dconf:

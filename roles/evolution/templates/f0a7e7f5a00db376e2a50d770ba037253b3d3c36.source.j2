@@ -1,0 +1,63 @@
+[Data Source]
+DisplayName={{ data_dict.username }}@anexia.com
+Enabled=true
+Parent=
+
+[Authentication]
+Host=exchange.anexia.work
+Method=Office365
+Port=443
+ProxyUid=system-proxy
+RememberPassword=true
+User={{ data_dict.username }}@anexia-it.com
+CredentialName=
+IsExternal=false
+
+[Collection]
+BackendName=ews
+CalendarEnabled=true
+ContactsEnabled=true
+Identity={{ data_dict.username }}@anexia-it.com
+MailEnabled=true
+AllowSourcesRename=true
+CalendarUrl=
+ContactsUrl=
+
+[Ews Backend]
+FilterInbox=true
+StoreChangesInterval=3
+LimitByAge=false
+LimitUnit=years
+LimitValue=1
+CheckAll=true
+ListenNotifications=true
+Email={{ data_dict.username }}@anexia.com
+FilterJunk=false
+FilterJunkInbox=false
+GalUid=6c78acafbe0b3d800356ed752d353fcaa39335da
+Hosturl=https://exchange.anexia.work/EWS/Exchange.asmx
+Oaburl=https://exchange.anexia.work/OAB/44547c5c-e3bb-4b72-9509-60802f2c701c/oab.xml
+OabOffline=false
+OalSelected=
+Timeout=120
+UseImpersonation=false
+ImpersonateUser=
+OverrideUserAgent=false
+UserAgent=Microsoft Office/14.0 (Windows NT ,5.1; Microsoft Outlook 14.0.4734; Pro)
+OverrideOauth2=true
+Oauth2Tenant=7d3af9b3-8682-4d5a-bec5-7af904408a6c
+Oauth2ClientId=20460e5d-ce91-49af-a3a5-70b6be7486d1
+Oauth2RedirectUri=https://login.microsoftonline.com/common/oauth2/nativeclient
+Oauth2ResourceUri=
+Oauth2EndpointHost=login.microsoftonline.com
+ShowPublicFolders=false
+ConcurrentConnections=1
+SyncTagStamp=0
+ForceHttp1=false
+UseOauth2V2=true
+
+[Security]
+Method=none
+
+[Offline]
+StaySynchronized=false
