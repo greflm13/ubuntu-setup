@@ -144,16 +144,10 @@ autoinstall:
   late-commands:
     - curtin in-target -- apt-get update
     - curtin in-target -- apt-get install -y curl vim tpm2-tools ansible git python3-psutil
-    - curtin in-target -- curl -o /tmp/tpm2-keysetup.sh https://raw.githubusercontent.com/greflm13/ubuntu-setup/refs/heads/main/tpm2-keysetup.sh
-    - curtin in-target -- curl -o /tmp/3rd-party-software.sh https://raw.githubusercontent.com/greflm13/ubuntu-setup/refs/heads/main/3rd-party-software.sh
-    - curtin in-target -- /bin/bash /tmp/tpm2-keysetup.sh
-    - curtin in-target -- /bin/bash /tmp/3rd-party-software.sh
+    - curtin in-target -- curl -o /tmp/additional-steps.sh https://raw.githubusercontent.com/greflm13/ubuntu-setup/refs/heads/main/additional-steps.sh
+    - curtin in-target -- /bin/bash /tmp/additional-steps.sh
   user-data:
     package_update: true
     package_upgrade: true
-    ansible:
-      package_name: ansible-core
-      install_method: distro
-      pull:
-        url: "https://github.com/greflm13/ubuntu-setup.git"
-        playbook_name: ansible-setup.yml
+    runcmd:
+      - /bin/bash /root/postinstall.sh
