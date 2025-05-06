@@ -3,8 +3,6 @@
 /opt/f-secure/linuxsecurity/bin/activate --psb --subscription-key CJ2U-AGF6-AAKZ-PLLR-JAEL
 yes | forticlient epctrl register anx-i-ems0401.anexia.work
 
-gsettings set org.gnome.evolution.mail show-startup-wizard false
-
 PASSWD=$(grep "1000" /etc/passwd)
 
 user=$(echo "$PASSWD" | awk -F: '{print $1}')
@@ -216,3 +214,5 @@ EOF
 
 chown 1000:1000 "${homedir}/.config/evolution/sources/f0a7e7f5a00db376e2a50d770ba037253b3d3c36.source"
 chmod 644 "${homedir}/.config/evolution/sources/f0a7e7f5a00db376e2a50d770ba037253b3d3c36.source"
+
+gsettings set org.gnome.evolution.mail show-startup-wizard false
