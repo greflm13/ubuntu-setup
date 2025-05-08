@@ -3,7 +3,7 @@
 # CHANGE URL TO YOUR SCRIPT HOST
 SCRIPTHOST="https://raw.githubusercontent.com/greflm13/ubuntu-setup/refs/heads/main"
 TO_RUN=(tpm2-keysetup 3rd-party-software)
-TO_DOWNLOAD=(postinstall)
+TO_DOWNLOAD=(postinstall printer-setup)
 
 # Download scripts
 for script in "${TO_DOWNLOAD[@]}"; do

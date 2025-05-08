@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
 # Create keyrings folder if it does not exist
-mkdir -p /etc/apt/keyrings
+mkdir -p /usr/share/keyrings
 
 # Mattermost public key
-curl https://deb.packages.mattermost.com/pubkey.gpg -o /etc/apt/keyrings/packages.mattermost.com.asc
+curl https://deb.packages.mattermost.com/pubkey.gpg -o /usr/share/keyrings/packages.mattermost.com.asc
 
 # Mattermost repo
-echo "deb [signed-by=/etc/apt/keyrings/packages.mattermost.com.asc] https://deb.packages.mattermost.com stable main" > /etc/apt/sources.list.d/mattermost_stable.list
+echo "deb [signed-by=/usr/share/keyrings/packages.mattermost.com.asc] https://deb.packages.mattermost.com stable main" > /etc/apt/sources.list.d/mattermost_stable.list
 
 # Anexia Fortimirror public key
-curl https://fortimirror.anexia.com/stable/DEB-GPG-KEY -o /etc/apt/keyrings/fortimirror.anexia.com.asc
+curl https://fortimirror.anexia.com/stable/DEB-GPG-KEY -o /usr/share/keyrings/fortimirror.anexia.com.asc
 
 # Anexia Fortimirror repo
-echo "deb [signed-by=/etc/apt/keyrings/fortimirror.anexia.com.asc arch=amd64] https://fortimirror.anexia.com/stable stable non-free" > /etc/apt/sources.list.d/fortimirror.anexia.list
+echo "deb [signed-by=/usr/share/keyrings/fortimirror.anexia.com.asc arch=amd64] https://fortimirror.anexia.com/stable stable non-free" > /etc/apt/sources.list.d/fortimirror.anexia.list
 
 # Citrix Workspace
 citrix_dl_urls="$(curl -sL "https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html" | grep -F "_amd64.deb?__gda__" | sed -En 's|^.*rel="(//.*amd64[^"]*)".*$|\1|p')"
