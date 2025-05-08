@@ -9,11 +9,11 @@ curl https://deb.packages.mattermost.com/pubkey.gpg -o /usr/share/keyrings/packa
 # Mattermost repo
 echo "deb [signed-by=/usr/share/keyrings/packages.mattermost.com.asc] https://deb.packages.mattermost.com stable main" > /etc/apt/sources.list.d/mattermost_stable.list
 
-# Anexia Fortimirror public key
-curl https://fortimirror.anexia.com/stable/DEB-GPG-KEY -o /usr/share/keyrings/fortimirror.anexia.com.asc
+# Fortinet public key
+curl https://repo.fortinet.com/repo/forticlient/7.4/ubuntu22/DEB-GPG-KEY -o /usr/share/keyrings/repo.fortinet.com.gpg
 
-# Anexia Fortimirror repo
-echo "deb [signed-by=/usr/share/keyrings/fortimirror.anexia.com.asc arch=amd64] https://fortimirror.anexia.com/stable stable non-free" > /etc/apt/sources.list.d/fortimirror.anexia.list
+# Fortinet repo
+echo "deb [signed-by=/usr/share/keyrings/repo.fortinet.com.gpg arch=amd64] https://repo.fortinet.com/repo/forticlient/7.4/ubuntu22/ stable non-free" > /etc/apt/sources.list.d/repo.fortinet.com.list
 
 # Citrix Workspace
 citrix_dl_urls="$(curl -sL "https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html" | grep -F "_amd64.deb?__gda__" | sed -En 's|^.*rel="(//.*amd64[^"]*)".*$|\1|p')"
