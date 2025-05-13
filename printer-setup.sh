@@ -12,7 +12,9 @@ cd /tmp || exit 1
 
 unzip FollowMe.zip
 
-mv /tmp/IT5PPDLinux_1100010000MU/German/CUPS1.2/KOC759GX.ppd /usr/share/cups/model/
+extracted="$(ls /tmp/IT5PPD*)"
+
+mv "/tmp/${extracted}/German/CUPS1.2/KOC759GX.ppd" /usr/share/cups/model/
 
 sed -i 's/workgroup = WORKGROUP/workgroup = ANX.LOCAL\n   tls enabled = no/g' /etc/samba/smb.conf
 
