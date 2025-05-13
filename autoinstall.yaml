@@ -151,4 +151,4 @@ autoinstall:
     package_update: true
     package_upgrade: true
     runcmd:
-      - /bin/bash /root/postinstall.sh
+      - /bin/bash /root/first_boot.sh

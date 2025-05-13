@@ -10,10 +10,10 @@ curl https://deb.packages.mattermost.com/pubkey.gpg -o /usr/share/keyrings/packa
 echo "deb [signed-by=/usr/share/keyrings/packages.mattermost.com.asc] https://deb.packages.mattermost.com stable main" > /etc/apt/sources.list.d/mattermost_stable.list
 
 # Fortinet public key
-curl https://repo.fortinet.com/repo/forticlient/7.4/ubuntu22/DEB-GPG-KEY -o /usr/share/keyrings/repo.fortinet.com.gpg
+curl https://repo.fortinet.com/repo/forticlient/7.4/ubuntu22/DEB-GPG-KEY -o /usr/share/keyrings/repo.fortinet.com.asc
 
 # Fortinet repo
-echo "deb [signed-by=/usr/share/keyrings/repo.fortinet.com.gpg arch=amd64] https://repo.fortinet.com/repo/forticlient/7.4/ubuntu22/ stable non-free" > /etc/apt/sources.list.d/repo.fortinet.com.list
+echo "deb [signed-by=/usr/share/keyrings/repo.fortinet.com.asc arch=amd64] https://repo.fortinet.com/repo/forticlient/7.4/ubuntu22/ stable non-free" > /etc/apt/sources.list.d/repo.fortinet.com.list
 
 # Citrix Workspace
 citrix_dl_urls="$(curl -sL "https://www.citrix.com/downloads/workspace-app/linux/workspace-app-for-linux-latest.html" | grep -F "_amd64.deb?__gda__" | sed -En 's|^.*rel="(//.*amd64[^"]*)".*$|\1|p')"

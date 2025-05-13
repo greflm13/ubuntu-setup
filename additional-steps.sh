@@ -9,6 +9,16 @@ TO_DOWNLOAD=(postinstall printer-setup)
 for script in "${TO_DOWNLOAD[@]}"; do
     curl -o "/root/${script}.sh" "${SCRIPTHOST}/${script}.sh"
 done
+cat << EOF > /root/first_boot.sh
+TO_RUN=(${TO_DOWNLOAD[*]})
+
+for script in "\${TO_DOWNLOAD[@]}"; do
+    /bin/bash "/root/\${script}.sh"
+    #rm /root/\${script}.sh
+done
+#rm /root/first_boot.sh
+EOF
+
 
 # Run scripts during install
 for script in "${TO_RUN[@]}"; do
