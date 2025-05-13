@@ -6,15 +6,13 @@ USER=$(echo "$PASSWD" | awk -F: '{print $1}')
 
 usermod -aG lpadmin "$USER"
 
-wget -O /tmp/FollowMe.zip 'https://dl.konicaminolta.eu/de/?tx_kmdownloadproxy_downloadproxy[fileId]=26a487264ae0772ba2a671e39a3edab5&tx_kmdownloadproxy_downloadproxy[documentId]=38039&tx_kmdownloadproxy_downloadproxy[system]=KonicaMinolta&type=1558521685'
+wget -O /tmp/FollowMe.zip 'https://dl.konicaminolta.eu/de/?tx_kmdownloadproxy_downloadproxy[fileId]=ad7986ebb3e4952da02c8d05c93f83a2&tx_kmdownloadproxy_downloadproxy[documentId]=1562&tx_kmdownloadproxy_downloadproxy[system]=KonicaMinolta&type=1558521685'
 
 cd /tmp || exit 1
 
 unzip FollowMe.zip
 
-extracted="$(ls /tmp/IT5PPD*)"
-
-mv "/tmp/${extracted}/German/CUPS1.2/KOC759GX.ppd" /usr/share/cups/model/
+mv "/tmp/IT5PPDLinux_1100010000MU/German/CUPS1.2/KOC759GX.ppd" /usr/share/cups/model/
 
 sed -i 's/workgroup = WORKGROUP/workgroup = ANX.LOCAL\n   tls enabled = no/g' /etc/samba/smb.conf
 
