@@ -37,4 +37,4 @@ apt-get install -f /tmp/ctxusb_amd64.deb -y
 apt-get install -f /tmp/f-secure.deb -y
 
 apt-get install -y evolution-ews mattermost-desktop forticlient
-snap install teams-for-linux
+# snap install teams-for-linux
