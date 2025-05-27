@@ -16,4 +16,8 @@ mv "/tmp/IT5PPDLinux_1100010000MU/German/CUPS1.2/KOC759GX.ppd" /usr/share/cups/m
 
 sed -i 's/workgroup = WORKGROUP/workgroup = ANX.LOCAL\n   tls enabled = no/g' /etc/samba/smb.conf
 
-lpadmin -p "FollowMe@Anexia" -D "Color Laser" -v smb://anx-i-prs01.anx.local/FollowMe -P /usr/share/cups/model/KOC759GX.ppd -o PaperSources-default=PC210 -o Model-default=C368 -o PrinterHDD-default=None
+su $USER -c "gnome-terminal -- bash -c 'read -sp "Enter your AD password : " pass; echo $pass > pass'"
+
+PASSWORD=$(cat pass)
+
+lpadmin -p "FollowMe@Anexia" -D "Color Laser" -v "smb://${USER}:${PASSWORD}@anx-i-prs01.anx.local/FollowMe" -P /usr/share/cups/model/KOC759GX.ppd -o PaperSources-default=PC210 -o Model-default=C368 -o PrinterHDD-default=None
