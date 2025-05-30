@@ -16,7 +16,8 @@ mv "/tmp/IT5PPDLinux_1100010000MU/German/CUPS1.2/KOC759GX.ppd" /usr/share/cups/m
 
 sed -i 's/workgroup = WORKGROUP/workgroup = ANX.LOCAL\n   tls enabled = no/g' /etc/samba/smb.conf
 
-su $USER -c "gnome-terminal -- bash -c 'read -sp "Enter your AD password : " pass; echo $pass > pass'"
+# shellcheck disable=SC2154
+su "$USER" -c "gnome-terminal -- bash -c 'read -sp "Enter your AD password : " pass; echo $pass > pass'"
 
 PASSWORD=$(cat pass)
 
